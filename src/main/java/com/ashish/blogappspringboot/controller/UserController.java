@@ -4,7 +4,10 @@ import com.ashish.blogappspringboot.dtos.CreateUserDto;
 import com.ashish.blogappspringboot.dtos.ErrorResponseDto;
 import com.ashish.blogappspringboot.dtos.LoginUserDto;
 import com.ashish.blogappspringboot.entities.UserEntity;
+import com.ashish.blogappspringboot.response.UserResponse;
+import com.ashish.blogappspringboot.security.JwtUtil;
 import com.ashish.blogappspringboot.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,17 +19,26 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ModelMapper mapper;
+
+    @Autowired
+    JwtUtil jwtUtil;
+
     @PostMapping(value = "")
-    public ResponseEntity<UserEntity> createUser(@RequestBody CreateUserDto createUserDto){
+    public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserDto createUserDto){
         var user = userService.createUser(createUserDto);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        var userResponse = mapper.map(user,UserResponse.class);
+        userResponse.setToken(jwtUtil.createJwt(user.getId()));
+        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<UserEntity> loginUser(@RequestBody LoginUserDto loginUserDto){
+    public ResponseEntity<UserResponse> loginUser(@RequestBody LoginUserDto loginUserDto){
         var user = userService.loginUser(loginUserDto.getUsername(), loginUserDto.getPassword());
-
-        return new ResponseEntity<>(user,HttpStatus.OK);
+        var userResponse = mapper.map(user,UserResponse.class);
+        userResponse.setToken(jwtUtil.createJwt(user.getId()));
+        return new ResponseEntity<>(userResponse,HttpStatus.OK);
     }
 
     @ExceptionHandler({
