@@ -3,26 +3,23 @@ package com.ashish.blogappspringboot.service;
 import com.ashish.blogappspringboot.dtos.CreateUserDto;
 import com.ashish.blogappspringboot.entities.UserEntity;
 import com.ashish.blogappspringboot.respositories.UserRepository;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-@Configuration
 public class UserService {
+
+    private final ModelMapper mapper;
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(ModelMapper mapper, UserRepository userRepository) {
+        this.mapper = mapper;
         this.userRepository = userRepository;
     }
 
     public UserEntity createUser(CreateUserDto createUserDto){
-        var user = UserEntity.builder()
-                .username(createUserDto.getUsername())
-                .email(createUserDto.getEmail())
-//                .password(password) // TODO: add password
-        .build();
+        var user = mapper.map(createUserDto,UserEntity.class);
 
         userRepository.save(user);
         return user;
