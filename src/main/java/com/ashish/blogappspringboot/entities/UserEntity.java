@@ -10,6 +10,7 @@ import org.springframework.lang.Nullable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserEntity {
 
     @Id
