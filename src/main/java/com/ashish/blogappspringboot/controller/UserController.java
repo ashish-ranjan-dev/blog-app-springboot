@@ -30,7 +30,8 @@ public class UserController {
     }
 
     @ExceptionHandler({
-            UserService.UserNotFoundException.class
+            UserService.UserNotFoundException.class,
+            UserService.InvalidCredentialsException.class
     })
     public ResponseEntity<ErrorResponseDto> handleUserNotFoundException(Exception ex){
         String message;
@@ -39,6 +40,10 @@ public class UserController {
         if(ex instanceof UserService.UserNotFoundException){
             message = ex.getMessage();
             status = HttpStatus.BAD_REQUEST;
+        }
+        else if (ex instanceof UserService.InvalidCredentialsException){
+            message = ex.getMessage();
+            status = HttpStatus.FORBIDDEN;
         }
         else{
             message = "Internal Server Error";
