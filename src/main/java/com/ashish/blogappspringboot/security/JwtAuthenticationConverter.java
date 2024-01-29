@@ -1,8 +1,9 @@
 package com.ashish.blogappspringboot.security;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationConverter;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class JwtAuthenticationConverter implements AuthenticationConverter {
     @Override

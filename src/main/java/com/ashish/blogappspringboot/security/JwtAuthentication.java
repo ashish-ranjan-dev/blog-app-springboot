@@ -37,7 +37,7 @@ public class JwtAuthentication implements Authentication {
 
     @Override
     public boolean isAuthenticated() {
-        return false;
+        return (userEntity!=null);
     }
 
     @Override

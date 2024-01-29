@@ -1,9 +1,11 @@
 package com.ashish.blogappspringboot.entities;
 
-import jakarta.persistence.*;
+
 import lombok.*;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+
+import javax.persistence.*;
 
 @Entity(name = "users") // could not use user as table name
 @Getter

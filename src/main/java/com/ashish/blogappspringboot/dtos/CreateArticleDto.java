@@ -1,6 +1,5 @@
 package com.ashish.blogappspringboot.dtos;
 
-import jakarta.persistence.Column;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 

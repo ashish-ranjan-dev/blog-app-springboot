@@ -1,6 +1,5 @@
 package com.ashish.blogappspringboot.entities;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "articles") // could not use user as table name

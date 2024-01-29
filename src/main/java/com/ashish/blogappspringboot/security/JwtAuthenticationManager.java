@@ -27,6 +27,7 @@ public class JwtAuthenticationManager implements AuthenticationManager {
             jwtAuthentication.setAuthenticated(true);
             return jwtAuthentication;
         }
-        return null;
+
+        throw new IllegalAccessError("Cannot authenticate user with non-JWT authentication");
     }
 }
